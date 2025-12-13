@@ -5,6 +5,8 @@ import api from '../services/api';
 import Button from '../components/common/Button';
 import SuccessAnimation from '../components/common/SuccessAnimation';
 
+import { encryptPassword } from '../utils/encryption';
+
 const LoginPage: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -21,7 +23,8 @@ const LoginPage: React.FC = () => {
         setError('');
 
         try {
-            const response = await api.post('/auth/login', { email, password });
+            const encryptedPassword = encryptPassword(password);
+            const response = await api.post('/auth/login', { email, password: encryptedPassword });
             const { user, tokens } = response.data.data;
 
             setShowSuccess(true);

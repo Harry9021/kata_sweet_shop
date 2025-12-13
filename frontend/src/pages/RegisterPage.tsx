@@ -5,6 +5,8 @@ import api from '../services/api';
 import Button from '../components/common/Button';
 import SuccessAnimation from '../components/common/SuccessAnimation';
 
+import { encryptPassword } from '../utils/encryption';
+
 const RegisterPage: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -22,7 +24,8 @@ const RegisterPage: React.FC = () => {
         setError('');
 
         try {
-            const response = await api.post('/auth/register', { email, password, role });
+            const encryptedPassword = encryptPassword(password);
+            const response = await api.post('/auth/register', { email, password: encryptedPassword, role });
             const { user, tokens } = response.data.data;
 
             setShowSuccess(true);

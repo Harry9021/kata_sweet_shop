@@ -2,6 +2,7 @@ import { Router, Request, Response } from 'express';
 import { body } from 'express-validator';
 import { AuthService } from '../services/auth.service';
 import { validate } from '../middlewares/validation.middleware';
+import { decryptPasswordMiddleware } from '../middlewares/decryption.middleware';
 
 const router = Router();
 const authService = new AuthService();
@@ -109,8 +110,8 @@ const logoutValidation = [
     body('refreshToken').notEmpty().withMessage('Refresh token is required'),
 ];
 
-router.post('/register', validate(registerValidation), controller.register.bind(controller));
-router.post('/login', validate(loginValidation), controller.login.bind(controller));
+router.post('/register', decryptPasswordMiddleware, validate(registerValidation), controller.register.bind(controller));
+router.post('/login', decryptPasswordMiddleware, validate(loginValidation), controller.login.bind(controller));
 router.post('/refresh', validate(refreshValidation), controller.refresh.bind(controller));
 router.post('/logout', validate(logoutValidation), controller.logout.bind(controller));
 
