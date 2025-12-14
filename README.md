@@ -106,8 +106,8 @@ graph TD
 
 
 ### Quality Assurance
-| Testing Reports |
-|:---:|
+| Testing Reports 1 | Testing Reports 2 |
+|:---:|:---:|
 | ![Testing Reports 1](screenshots/testing1.png) | ![Testing Reports 2](screenshots/testing2.png) |
 
 ## Getting Started
