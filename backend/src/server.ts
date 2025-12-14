@@ -61,6 +61,10 @@ class Server {
         this.app.use(errorHandler);
     }
 
+    public getApp(): Application {
+        return this.app;
+    }
+
     public async start(): Promise<void> {
         try {
             await DatabaseConfig.connect();
@@ -80,6 +84,9 @@ class Server {
 }
 
 const server = new Server();
-server.start();
+
+if (process.env.NODE_ENV !== 'test') {
+    server.start();
+}
 
 export default server;
